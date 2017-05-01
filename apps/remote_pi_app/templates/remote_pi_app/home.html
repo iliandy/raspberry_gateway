@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static '/remote_pi_app/css/style1.css' %}">
+  </head>
+  <body>
+    <div class="container">
+      <h2>Welcome, {{ user.name }}!</h2>
+      <form action="/open_door" method="post">
+        {% csrf_token %}
+        <input class="submit_but" type="submit" value="Open Door">
+      </form>
+      <form action="/close_door" method="post">
+        {% csrf_token %}
+        <input class="submit_but" type="submit" value="Close Door">
+      </form>
+    </div>
+
+    {% if messages %}
+      {% for msg in messages %}
+        <p class="flash_msg">{{ msg }}</p>
+      {% endfor %}
+    {% endif %}
+
+  </body>
+</html>
