@@ -7,3 +7,7 @@ from .models import *
 def index(request):
 
 	return render(request, "remote_pi_app/index.html")
+
+def openGarage(request):
+	
+	return redirect('/')
