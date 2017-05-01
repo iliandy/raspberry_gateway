@@ -1,0 +1,17 @@
+.container {
+  padding: 20px;
+  background: linear-gradient(yellow, green)
+}
+
+label {
+  display: table;
+  width: 200px;
+}
+
+.flash_msg {
+  color: red;
+}
+
+.submit_but {
+  width: 5%;
+}
