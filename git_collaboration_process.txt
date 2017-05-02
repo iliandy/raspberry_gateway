@@ -1,0 +1,13 @@
+1.Create as many branch as necessary. Name your branch based on what feature to add. To create a new branch use following command:
+		git branch <branch name>
+2.Make necessary changes and push branch to the GitHub
+		git push origin <branch name>
+3.In your GitHub account create a pull request from branch to master
+	collaborate approve/merge pull request to master 
+	merge and pull branch into master
+4.In your local:
+	Go to master branch: git checkout <master>
+	git pull - -rebase origin master 
+	git branch <branch name>
+	To update the working branch with master branch use following command:
+		git branch origin master <woking branch>
