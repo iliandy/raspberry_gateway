@@ -9,13 +9,15 @@
   <body>
     <div class="container">
       <h2>Welcome, {{ user.name }}!</h2>
-      <form action="/open_door" method="post">
+      <a href="/users/logout">Logout</a>
+      <form action="/operate_door" method="post">
         {% csrf_token %}
-        <input class="submit_but" type="submit" value="Open Door">
-      </form>
-      <form action="/close_door" method="post">
-        {% csrf_token %}
-        <input class="submit_but" type="submit" value="Close Door">
+        {% if door_closed == True %}
+        <input class="submit_but" type="submit" value="Open Garage Door">
+        {% endif %}
+        {% if door_closed == False %}
+        <input class="submit_but" type="submit" value="Close Garage Door">
+        {% endif %}
       </form>
     </div>
 

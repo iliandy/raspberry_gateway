@@ -16,7 +16,7 @@ def index(request):
 
 
 def loginUser(request):
-    print "-= Reached /login (redirect to home.html) =-"
+    print "-= Reached /users/login (redirect to home.html) =-"
     if request.method != "POST":
         return redirect("/")
 
@@ -32,17 +32,33 @@ def loginUser(request):
 
 def home(request):
     print "-= Reached /home (home.html) =-"
+    if "door_closed" not in request.session:
+        request.session["door_closed"] = True
+
     data = {
         "user": current_user(request),
+        "door_closed": request.session["door_closed"]
     }
     return render(request, "remote_pi_app/home.html", data)
 
-def openDoor(request):
-    print "-= Reached /open_door (redirect to home.html) =-"
-    messages.success(request, "Door opening...")
+def operateDoor(request):
+    print "-= Reached /operate_door (redirect to home.html) =-"
+
+    if request.session["door_closed"]:
+        request.session["door_closed"] = False
+        # open_door func from GPIO .py
+        messages.success(request, "Garage door opening...")
+
+    elif request.session["door_closed"] is False:
+        request.session["door_closed"] = True
+        # close_door func from GPIO .py
+        messages.success(request, "Garage door closing...")
+
     return redirect("/home")
 
-def closeDoor(request):
-    print "-= Reached /close_door (redirect to home.html) =-"
-    messages.success(request, "Door closing...")
-    return redirect("/home")
+def logoutUser(request):
+    print "-= Reached /users/logout (redirect to /) =-"
+    request.session["door_closed"] = True
+    # close_door func from GPIO .py
+    request.session.clear()
+    return redirect("/")
