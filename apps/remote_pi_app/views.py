@@ -46,12 +46,12 @@ def operateDoor(request):
 
     if request.session["door_closed"]:
         request.session["door_closed"] = False
-        # open_door func from GPIO .py
+        openDoor()
         messages.success(request, "Garage door opening...")
 
     elif request.session["door_closed"] is False:
         request.session["door_closed"] = True
-        # close_door func from GPIO .py
+        closeDoor()
         messages.success(request, "Garage door closing...")
 
     return redirect("/home")
