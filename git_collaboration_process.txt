@@ -10,4 +10,4 @@
 	git pull - -rebase origin master 
 	git branch <branch name>
 	To update the working branch with master branch use following command:
-		git branch origin master <woking branch>
+		git merge master 
