@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
+import time
+import RPi.GPIO as GPIO
 # import re, bcrypt
 # import time
 # import RPi.GPIO as GPIO
@@ -8,6 +10,10 @@ from django.db import models
 # GPIO.setmode(GPIO.BOARD)
 # pin = 11
 # GPIO.setup(pin, GPIO.OUT)
+
+GPIO.setmode(GPIO.BOARD)
+pin = 11
+GPIO.setup(pin, GPIO.OUT)
 
 class UserManager(models.Manager):
     def validateUserLog(self, post_data):
