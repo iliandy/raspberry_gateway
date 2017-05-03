@@ -11,7 +11,6 @@ def current_user(request):
 
 def index(request):
     print "-= Reached / (index.html) =-"
-    print request.session.items()
     return render(request, "remote_pi_app/index.html")
 
 
@@ -34,7 +33,8 @@ def home(request):
     print "-= Reached /home (home.html) =-"
     if "door_closed" not in request.session:
         request.session["door_closed"] = True
-
+    
+    print request.session.items()
     data = {
         "user": current_user(request),
         "door_closed": request.session["door_closed"]
@@ -46,12 +46,12 @@ def operateDoor(request):
 
     if request.session["door_closed"]:
         request.session["door_closed"] = False
-        openDoor()
+        # openDoor()
         messages.success(request, "Garage door opening...")
 
     elif request.session["door_closed"] is False:
         request.session["door_closed"] = True
-        closeDoor()
+        # closeDoor()
         messages.success(request, "Garage door closing...")
 
     return redirect("/home")
@@ -59,6 +59,6 @@ def operateDoor(request):
 def logoutUser(request):
     print "-= Reached /users/logout (redirect to /) =-"
     request.session["door_closed"] = True
-    # close_door func from GPIO .py
+    # closeDoor()
     request.session.clear()
     return redirect("/")

@@ -4,7 +4,6 @@ from django.db import models
 # import re, bcrypt
 # import time
 # import RPi.GPIO as GPIO
-# import re, bcrypt
 
 # GPIO.setmode(GPIO.BOARD)
 # pin = 11
