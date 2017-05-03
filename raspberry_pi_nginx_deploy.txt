@@ -1,0 +1,83 @@
+-= ">" designates terminal commands. =-
+
+------ Update RPi ------
+> sudo apt-get install python-pip python-dev nginx git
+> sudo apt-get update
+
+------ Clone Github Repo to RPi ------
+> git clone https://github.com/soikatesc/remote_pi.git
+
+------ Create Python Virtual Environment ------
+> sudo pip install virtualenv
+> cd remote_pi
+> virtualenv venv
+> source venv/bin/activate
+
+------ Update Virtual Env ------
+> apt-get install python-dev python-rpi.gpio
+> apt-get update
+
+------ Set up Python Packages ------
+> pip install django django-extensions gunicorn
+
+------ Collect static files (css/img/js) for RPi ------
+> python manage.py collectstatic
+
+***** MAKE SURE TO DEACTIVATE PYTHON VIRTUAL ENVIRONMENT *****
+> deactivate
+
+------ Setup Gunicorn Settings ------
+> sudo vim /etc/systemd/system/gunicorn.service
+
+	paste this info:
+------ Contents for /etc/systemd/system/gunicorn.service ------
+[Unit]
+Description=gunicorn daemon
+After=network.target
+[Service]
+User=pi
+Group=www-data
+WorkingDirectory=/home/pi/Desktop/remote_pi
+ExecStart=/home/pi/Desktop/remote_pi/venv/bin/gunicorn --workers 3 --bind unix:/home/pi/Desktop/remote_pi/main.sock main.wsgi:application
+[Install]
+WantedBy=multi-user.target
+
+------ *** end of file *** ------
+> sudo systemctl daemon-reload
+> sudo systemctl start gunicorn
+> sudo systemctl enable gunicorn
+
+------ Setup Nginx Settings ------
+> sudo vim /etc/nginx/sites-available/main
+
+------ Contents for /etc/nginx/sites-available/main ------
+server {
+  listen 80;
+  server_name <RPi IP address>;
+  location = /favicon.ico { access_log off; log_not_found off; }
+  location /static/ {
+      root /home/pi/Desktop/remote_pi;
+  }
+  location / {
+      include proxy_params;
+      proxy_pass http://unix:/home/pi/Desktop/remote_pi/main.sock;
+  }
+}
+
+------ *** end of file *** ------
+> sudo ln -s /etc/nginx/sites-available/main /etc/nginx/sites-enabled
+> sudo nginx -t
+> sudo rm /etc/nginx/sites-enabled/default
+> sudo service nginx restart
+
+** HOORAY! Your RPi should be up and running **
+
+Useful Commands:
+Stop Gunicorn Service:
+> sudo systemctl stop gunicorn
+
+Restart
+> sudo systemctl restart gunicorn
+
+See if gunicorn service is running:
+> ps ax | grep gunicorn
