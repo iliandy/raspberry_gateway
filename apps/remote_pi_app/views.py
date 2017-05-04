@@ -33,7 +33,7 @@ def home(request):
     print "-= Reached /home (home.html) =-"
     if "door_closed" not in request.session:
         request.session["door_closed"] = True
-    
+
     print request.session.items()
     data = {
         "user": current_user(request),
@@ -46,19 +46,19 @@ def operateDoor(request):
 
     if request.session["door_closed"]:
         request.session["door_closed"] = False
-        # openDoor()
-        messages.success(request, "Garage door opening...")
+        openDoor()
+        messages.info(request, "Garage door opening...")
 
     elif request.session["door_closed"] is False:
         request.session["door_closed"] = True
-        # closeDoor()
-        messages.success(request, "Garage door closing...")
+        closeDoor()
+        messages.info(request, "Garage door closing...")
 
     return redirect("/home")
 
 def logoutUser(request):
     print "-= Reached /users/logout (redirect to /) =-"
     request.session["door_closed"] = True
-    # closeDoor()
+    closeDoor()
     request.session.clear()
     return redirect("/")
