@@ -4,30 +4,17 @@
 > sudo apt-get install python-pip python-dev nginx git
 > sudo apt-get update
 
+------ Set up Python Packages ------
+> sudo pip install django django-extensions gunicorn
+
 ------ Clone Github Repo to RPi ------
 > git clone https://github.com/soikatesc/remote_pi.git
-
------- Create Python Virtual Environment ------
-> sudo pip install virtualenv
-> cd remote_pi
-> virtualenv venv
-> source venv/bin/activate
-
------- Update Virtual Env ------
-> apt-get install python-dev python-rpi.gpio
-> apt-get update
-
------- Set up Python Packages ------
-> pip install django django-extensions gunicorn
 
 ------ Collect static files (css/img/js) for RPi ------
 > python manage.py collectstatic
 
-***** MAKE SURE TO DEACTIVATE PYTHON VIRTUAL ENVIRONMENT *****
-> deactivate
-
 ------ Setup Gunicorn Settings ------
-> sudo vim /etc/systemd/system/gunicorn.service
+> sudo nano /etc/systemd/system/gunicorn.service
 
 	paste this info:
 ------ Contents for /etc/systemd/system/gunicorn.service ------
@@ -38,7 +25,7 @@ After=network.target
 User=pi
 Group=www-data
 WorkingDirectory=/home/pi/Desktop/remote_pi
-ExecStart=/home/pi/Desktop/remote_pi/venv/bin/gunicorn --workers 3 --bind unix:/home/pi/Desktop/remote_pi/main.sock main.wsgi:application
+ExecStart=/usr/local/bin/gunicorn --workers 3 --bind unix:/home/pi/Desktop/remote_pi/main.sock main.wsgi:application
 [Install]
 WantedBy=multi-user.target
 
@@ -48,7 +35,7 @@ WantedBy=multi-user.target
 > sudo systemctl enable gunicorn
 
 ------ Setup Nginx Settings ------
-> sudo vim /etc/nginx/sites-available/main
+> sudo nano /etc/nginx/sites-available/main
 
 ------ Contents for /etc/nginx/sites-available/main ------
 server {
@@ -56,7 +43,7 @@ server {
   server_name <RPi IP address>;
   location = /favicon.ico { access_log off; log_not_found off; }
   location /static/ {
-      root /home/pi/Desktop/remote_pi;
+      root /home/pi/Desktop/remote_pi/apps/remote_pi_app;
   }
   location / {
       include proxy_params;
