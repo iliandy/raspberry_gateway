@@ -4,19 +4,20 @@
   <head>
     <meta charset="utf-8">
     <title>Home</title>
+    <link rel="stylesheet" href="../../static/remote_pi_app/css/style1.css">
     <link rel="stylesheet" type="text/css" href="{% static '/remote_pi_app/css/style1.css' %}">
   </head>
   <body>
     <div class="container">
+      <a id="logout_link" href="/users/logout">Logout</a>
       <h2>Welcome, {{ user.name }}!</h2>
-      <a href="/users/logout">Logout</a>
       <form action="/operate_door" method="post">
         {% csrf_token %}
         {% if door_closed == True %}
-        <input class="submit_but" type="submit" value="Open Garage Door">
+        <input class="door_but open" type="submit" value="Open Garage Door">
         {% endif %}
         {% if door_closed == False %}
-        <input class="submit_but" type="submit" value="Close Garage Door">
+        <input class="door_but close" type="submit" value="Close Garage Door">
         {% endif %}
       </form>
     </div>
