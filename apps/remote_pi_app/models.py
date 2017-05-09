@@ -6,8 +6,8 @@ import time
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BOARD)
-pin = 11
-GPIO.setup(pin, GPIO.OUT)
+out_pin = 3
+GPIO.setup(out_pin, GPIO.OUT)
 
 class UserManager(models.Manager):
     def validateUserLog(self, post_data):
@@ -36,7 +36,7 @@ class User(models.Model):
 
 
 def openDoor():
-   GPIO.output(pin, False)
+   GPIO.output(out_pin, False)
 
 def closeDoor():
-   GPIO.output(pin, True)
+   GPIO.output(out_pin, True)
