@@ -2,12 +2,6 @@
 from __future__ import unicode_literals
 from django.db import models
 # import re, bcrypt
-import time
-import RPi.GPIO as GPIO
-
-GPIO.setmode(GPIO.BOARD)
-out_pin = 3
-GPIO.setup(out_pin, GPIO.OUT)
 
 class UserManager(models.Manager):
     def validateUserLog(self, post_data):
@@ -33,10 +27,3 @@ class User(models.Model):
 
     def __str__(self):
         return "ID: {}, Name: {}, e-mail: {}, Password: {}".format(self.id, self.name, self.email, self.password)
-
-
-def openDoor():
-   GPIO.output(out_pin, False)
-
-def closeDoor():
-   GPIO.output(out_pin, True)
