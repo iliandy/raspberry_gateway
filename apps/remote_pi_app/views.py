@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from models import *
-import gpio_func
+from gpio_func import *
 
 # helper function to get current user id
 def current_user(request):
@@ -60,6 +60,6 @@ def operateDoor(request):
 def logoutUser(request):
     print "-= Reached /users/logout (redirect to /) =-"
     request.session["door_closed"] = True
-    toggleSwitch()
+    # toggleSwitch()
     request.session.clear()
     return redirect("/")

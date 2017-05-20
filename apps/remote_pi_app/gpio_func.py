@@ -1,4 +1,4 @@
-# import time
+from time import sleep
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BOARD)
@@ -7,4 +7,5 @@ GPIO.setup(out_pin, GPIO.OUT)
 
 def toggleSwitch():
    GPIO.output(out_pin, False)
+   sleep(0.1)
    GPIO.output(out_pin, True)
