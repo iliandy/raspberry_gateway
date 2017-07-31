@@ -1,0 +1,101 @@
+nav {
+  font-family: "Palatino Linotype", Georgia, serif;
+}
+
+#logo {
+	margin-left: 2%;
+  font-size: 2rem;
+  color: #BB1042;
+}
+
+.container {
+  font-family: "Palatino Linotype", Georgia, serif;
+}
+
+
+
+/** {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  outline: 0;
+}
+
+.container {
+  font-family: "Palatino Linotype", Georgia, serif;
+  font-size: 100%;
+  padding: 20px;
+  background: linear-gradient(yellow, green);
+  width: 100%;
+  height: 100%;
+}
+
+p:nth-child(2) {
+  font-weight: bold;
+}
+
+label {
+  width: 10%;
+}
+
+input {
+  display: table;
+  width: 10%;
+  height: 5%;
+  margin: 5px 0 10px 0;
+}
+
+#logout_link {
+  float: right;
+  margin-right: 3%;
+  text-decoration: none;
+  color: red;
+}
+
+#logout_link:hover {
+  color: blue;
+}
+
+
+.flash_msg {
+  color: red;
+}
+
+.login_but {
+  width: 5%;
+  height: auto;
+  padding: 5px;
+  border: 1px solid white;
+  border-radius: 50%;
+  box-shadow: 3px 3px 3px gray;
+  background: linear-gradient(to bottom right, gray, white);
+  font-family: "Palatino Linotype", Georgia, serif;
+}
+
+.door_but {
+  width: 140px;
+  height: 140px;
+  padding: 5px;
+  border: 1px solid white;
+  border-radius: 100%;
+  box-shadow: 3px 3px 3px gray;
+  color: white;
+  margin: 20px 0;
+  font-family: "Palatino Linotype", Georgia, serif;
+}
+
+.open {
+  background: linear-gradient(to bottom right, blue, white);
+}
+
+.open:hover {
+  background: linear-gradient(to bottom right, black, white);
+}
+
+.close {
+  background: linear-gradient(to top left, blue, white);
+}
+
+.close:hover {
+  background: linear-gradient(to top left, black, white);
+}*/

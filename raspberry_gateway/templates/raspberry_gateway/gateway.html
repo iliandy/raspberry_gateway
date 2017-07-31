@@ -1,0 +1,21 @@
+{% extends "raspberry_gateway/base.html" %}
+
+{% block content %}
+  <!-- <a id="logout_link" href="/users/logout">Logout</a> -->
+  <h3>Hi, {{ user.name }}!</h3>
+  <p>Click to open/close Raspberry Gateway:</p>
+  <form action="/operate_door" method="post">
+    {% csrf_token %}
+    {% if door_closed == True %}
+      <button class="btn-floating btn-large waves-effect waves-light yellow accent-4" type="submit" name="action">
+        <i class="material-icons right">arrow_drop_up</i>
+      </button>
+    {% endif %}
+    {% if door_closed == False %}
+      <button class="btn-floating btn-large waves-effect waves-light orange" type="submit" name="action">
+        <i class="material-icons right">arrow_drop_down</i>
+      </button>
+    {% endif %}
+  </form>
+
+{% endblock %}

@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from models import *
-from gpio_func import *
+# from gpio_func import *
 
 # helper function to get current user id
 def current_user(request):
@@ -12,11 +12,11 @@ def current_user(request):
 
 def index(request):
     print "-= Reached / (index.html) =-"
-    return render(request, "remote_pi_app/index.html")
+    return render(request, "raspberry_gateway/index.html")
 
 
 def loginUser(request):
-    print "-= Reached /users/login (redirect to home.html) =-"
+    print "-= Reached /users/login (redirect to gateway.html) =-"
     if request.method != "POST":
         return redirect("/")
 
@@ -26,12 +26,12 @@ def loginUser(request):
         messages.error(request, check["errors"])
         return redirect("/")
 
-    # valid email, password for login, store user id to session, go to home.html
+    # valid email, password for login, store user id to session, go to gateway.html
     request.session["user_id"] = check["user"].id
-    return redirect("/home")
+    return redirect("/gateway")
 
-def home(request):
-    print "-= Reached /home (home.html) =-"
+def gateway(request):
+    print "-= Reached /gateway (gateway.html) =-"
     if "door_closed" not in request.session:
         request.session["door_closed"] = True
 
@@ -40,22 +40,22 @@ def home(request):
         "user": current_user(request),
         "door_closed": request.session["door_closed"]
     }
-    return render(request, "remote_pi_app/home.html", data)
+    return render(request, "raspberry_gateway/gateway.html", data)
 
 def operateDoor(request):
-    print "-= Reached /operate_door (redirect to home.html) =-"
+    print "-= Reached /operate_door (redirect to gateway.html) =-"
 
     if request.session["door_closed"]:
         request.session["door_closed"] = False
-        toggleSwitch()
+        # toggleSwitch()
         messages.info(request, "Garage door opening...")
 
     elif request.session["door_closed"] is False:
         request.session["door_closed"] = True
-        toggleSwitch()
+        # toggleSwitch()
         messages.info(request, "Garage door closing...")
 
-    return redirect("/home")
+    return redirect("/gateway")
 
 def logoutUser(request):
     print "-= Reached /users/logout (redirect to /) =-"

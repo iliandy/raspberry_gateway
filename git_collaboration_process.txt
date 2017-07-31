@@ -7,7 +7,7 @@
 	merge and pull branch into master
 4.In your local:
 	Go to master branch: git checkout <master>
-	git pull - -rebase origin master 
+	git pull --rebase origin master 
 	git branch <branch name>
 	To update the working branch with master branch use following command:
 		git merge master 
