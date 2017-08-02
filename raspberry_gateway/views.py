@@ -12,11 +12,15 @@ def current_user(request):
 
 def index(request):
     print "-= Reached / (index.html) =-"
-    return render(request, "remote_pi_app/index.html")
+    # redirect user to gateway.html if logged in
+    if "user_id" in request.session:
+        return redirect("/gateway")
+
+    return render(request, "raspberry_gateway/index.html")
 
 
 def loginUser(request):
-    print "-= Reached /users/login (redirect to home.html) =-"
+    print "-= Reached /users/login (redirect to gateway.html) =-"
     if request.method != "POST":
         return redirect("/")
 
@@ -26,12 +30,16 @@ def loginUser(request):
         messages.error(request, check["errors"])
         return redirect("/")
 
-    # valid email, password for login, store user id to session, go to home.html
+    # valid email, password for login, store user id to session, go to gateway.html
     request.session["user_id"] = check["user"].id
-    return redirect("/home")
+    return redirect("/gateway")
 
-def home(request):
-    print "-= Reached /home (home.html) =-"
+def gateway(request):
+    print "-= Reached /gateway (gateway.html) =-"
+    # redirect user to index.html if not logged in
+    if "user_id" not in request.session:
+        return redirect("/")
+
     if "door_closed" not in request.session:
         request.session["door_closed"] = True
 
@@ -40,10 +48,10 @@ def home(request):
         "user": current_user(request),
         "door_closed": request.session["door_closed"]
     }
-    return render(request, "remote_pi_app/home.html", data)
+    return render(request, "raspberry_gateway/gateway.html", data)
 
 def operateDoor(request):
-    print "-= Reached /operate_door (redirect to home.html) =-"
+    print "-= Reached /operate_door (redirect to gateway.html) =-"
 
     if request.session["door_closed"]:
         request.session["door_closed"] = False
@@ -55,11 +63,10 @@ def operateDoor(request):
         toggleSwitch()
         messages.info(request, "Garage door closing...")
 
-    return redirect("/home")
+    return redirect("/gateway")
 
 def logoutUser(request):
     print "-= Reached /users/logout (redirect to /) =-"
     request.session["door_closed"] = True
-    # toggleSwitch()
     request.session.clear()
     return redirect("/")

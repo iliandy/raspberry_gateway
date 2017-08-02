@@ -1,0 +1,50 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Raspberry Gateway</title>
+    <!--Import Google Icon Font-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="{% static '/raspberry_gateway/css/materialize.min.css' %}"  media="screen, projection"/>
+    <link rel="stylesheet" href="{% static '/raspberry_gateway/css/my_css.css' %}">
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="{% static '/raspberry_gateway/js/materialize.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/raspberry_gateway/js/my_js.js' %}"></script>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-wrapper blue darken-3">
+        <a href="/"><span id="logo">Raspberry Gateway</span></a>
+        <a href="#" data-activates="mobile-demo" class="right button-collapse"><i class="material-icons">menu</i></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          {% if request.session.user_id %}
+            <li><a href="/users/logout">Logout</a></li>
+          {% endif %}
+        </ul>
+
+        <ul id="mobile-demo" class="side-nav">
+          {% if request.session.user_id %}
+            <li><a href="/users/logout">Logout</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+
+      <div class="row">
+        {% if messages %}
+          {% for msg in messages %}
+            <p class="flash_msg red-text">{{ msg }}</p>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+    </div>
+  </body>
+</html>
