@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from models import *
-# from gpio_func import *
+from gpio_func import *
 
 # helper function to get current user id
 def current_user(request):
@@ -12,6 +12,10 @@ def current_user(request):
 
 def index(request):
     print "-= Reached / (index.html) =-"
+    # redirect user to gateway.html if logged in
+    if "user_id" in request.session:
+        return redirect("/gateway")
+
     return render(request, "raspberry_gateway/index.html")
 
 
@@ -32,6 +36,10 @@ def loginUser(request):
 
 def gateway(request):
     print "-= Reached /gateway (gateway.html) =-"
+    # redirect user to index.html if not logged in
+    if "user_id" not in request.session:
+        return redirect("/")
+
     if "door_closed" not in request.session:
         request.session["door_closed"] = True
 
@@ -47,12 +55,12 @@ def operateDoor(request):
 
     if request.session["door_closed"]:
         request.session["door_closed"] = False
-        # toggleSwitch()
+        toggleSwitch()
         messages.info(request, "Garage door opening...")
 
     elif request.session["door_closed"] is False:
         request.session["door_closed"] = True
-        # toggleSwitch()
+        toggleSwitch()
         messages.info(request, "Garage door closing...")
 
     return redirect("/gateway")
@@ -60,6 +68,5 @@ def operateDoor(request):
 def logoutUser(request):
     print "-= Reached /users/logout (redirect to /) =-"
     request.session["door_closed"] = True
-    # toggleSwitch()
     request.session.clear()
     return redirect("/")

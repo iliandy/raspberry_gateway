@@ -1,17 +1,18 @@
-nav {
+html {
   font-family: "Palatino Linotype", Georgia, serif;
+  height: 100%;
+}
+body {
+  background-image: url("/static/raspberry_gateway/img/blue_geo.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 #logo {
 	margin-left: 2%;
   font-size: 2rem;
-  color: #BB1042;
+  /*color: #BB1042;*/
 }
-
-.container {
-  font-family: "Palatino Linotype", Georgia, serif;
-}
-
 
 
 /** {

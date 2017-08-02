@@ -1,21 +1,23 @@
 {% extends "raspberry_gateway/base.html" %}
 
 {% block content %}
-  <!-- <a id="logout_link" href="/users/logout">Logout</a> -->
+<div class="row">
   <h3>Hi, {{ user.name }}!</h3>
   <p>Click to open/close Raspberry Gateway:</p>
-  <form action="/operate_door" method="post">
+  <form id="operate-btn" action="/operate_door" method="post">
     {% csrf_token %}
-    {% if door_closed == True %}
-      <button class="btn-floating btn-large waves-effect waves-light yellow accent-4" type="submit" name="action">
-        <i class="material-icons right">arrow_drop_up</i>
-      </button>
-    {% endif %}
-    {% if door_closed == False %}
-      <button class="btn-floating btn-large waves-effect waves-light orange" type="submit" name="action">
-        <i class="material-icons right">arrow_drop_down</i>
-      </button>
+    {% if door_closed %}
+    <button class="btn btn-large waves-effect waves-light blue" type="submit" name="action">Open Garage Door</button>
+    {% else %}
+    <button class="btn btn-large waves-effect waves-light orange" type="submit" name="action">Close Garage Door</button>
     {% endif %}
   </form>
 
+  {% if door_closed %}
+    <p>Door status: Closed</p>
+  {% else %}
+    <p>Door status: Open</p>
+  {% endif %}
+
+</div>
 {% endblock %}
