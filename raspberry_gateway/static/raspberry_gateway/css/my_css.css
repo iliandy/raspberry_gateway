@@ -3,15 +3,13 @@ html {
   height: 100%;
 }
 body {
-  background-image: url("/static/raspberry_gateway/img/blue_geo.jpg");
-  background-repeat: no-repeat;
+  background: url("/static/raspberry_gateway/img/blue_geo.jpg") no-repeat center fixed;
   background-size: 100% 100%;
 }
 
 #logo {
 	margin-left: 2%;
   font-size: 2rem;
-  /*color: #BB1042;*/
 }
 
 
