@@ -8,7 +8,7 @@
 > sudo pip install django django-extensions gunicorn
 
 ------ Clone Github Repo to RPi ------
-> git clone https://github.com/soikatesc/remote_pi.git
+> git clone https://github.com/iliandy/raspberry_gateway.git
 
 ------ Collect static files (css/img/js) for RPi ------
 > python manage.py collectstatic
@@ -24,8 +24,8 @@ After=network.target
 [Service]
 User=pi
 Group=www-data
-WorkingDirectory=/home/pi/Desktop/remote_pi
-ExecStart=/usr/local/bin/gunicorn --workers 3 --bind unix:/home/pi/Desktop/remote_pi/main.sock main.wsgi:application
+WorkingDirectory=/home/pi/Desktop/raspberry_gateway
+ExecStart=/usr/local/bin/gunicorn --workers 3 --bind unix:/home/pi/Desktop/raspberry_gateway/main.sock main.wsgi:application
 [Install]
 WantedBy=multi-user.target
 
@@ -43,11 +43,11 @@ server {
   server_name <RPi IP address>;
   location = /favicon.ico { access_log off; log_not_found off; }
   location /static/ {
-      root /home/pi/Desktop/remote_pi/apps/remote_pi_app;
+      root /home/pi/Desktop/raspberry_gateway/raspberry_gateway;
   }
   location / {
       include proxy_params;
-      proxy_pass http://unix:/home/pi/Desktop/remote_pi/main.sock;
+      proxy_pass http://unix:/home/pi/Desktop/raspberry_gateway/main.sock;
   }
 }
 

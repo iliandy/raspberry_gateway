@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="row">
-  <h3>Hi, {{ user.name }}!</h3>
+  <h4>Hi, {{ user.name }}!</h4>
   <p>Click to open/close Raspberry Gateway:</p>
   <form id="operate-btn" action="/operate_door" method="post">
     {% csrf_token %}
