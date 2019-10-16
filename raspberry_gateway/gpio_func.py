@@ -8,5 +8,5 @@ GPIO.setup(pin_out, GPIO.OUT)
 
 def toggleSwitch():
     GPIO.output(pin_out, False)
-    sleep(0.3)
+    sleep(0.5)
     GPIO.output(pin_out, True)
